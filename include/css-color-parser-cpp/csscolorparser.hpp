@@ -41,6 +41,14 @@ struct Color {
         : r(r_), g(g_), b(b_), a(a_) {
     }
     unsigned char r = 0, g = 0, b = 0, a = 0;
+
+    unsigned int uint32() {
+        return (r << 24) | (g << 16) | (b << 8) | a;
+    }
+
+    std::string rgbaString() {
+        return std::string("rgba(") + std::to_string(r) + ", " + std::to_string(g) + ", " + std::to_string(b) + ", " + std::to_string(a) + ")";
+    }
 };
 
 inline bool operator==(const Color& lhs, const Color& rhs) {
