@@ -183,7 +183,7 @@ std::vector<std::string> split(const std::string& s, char delim) {
     return elems;
 }
 
-optional<Color> parse(const std::string& css_str) {
+Color parse(const std::string& css_str) {
     std::string str = css_str;
 
     // Remove all whitespace, not compliant, but should just be more accepting.
@@ -208,12 +208,12 @@ optional<Color> parse(const std::string& css_str) {
                     return {};
                 }
                 else {
-                    return { {
+                    return { 
                         static_cast<uint8_t>(((iv & 0xf00) >> 4) | ((iv & 0xf00) >> 8)),
                         static_cast<uint8_t>((iv & 0xf0) | ((iv & 0xf0) >> 4)),
                         static_cast<uint8_t>((iv & 0xf) | ((iv & 0xf) << 4)),
                         1
-                    } };
+                    };
                 }
                 break;
 
@@ -223,12 +223,12 @@ optional<Color> parse(const std::string& css_str) {
                     return {};  // Covers NaN.
                 }
                 else {
-                    return { {
+                    return {
                         static_cast<uint8_t>((iv & 0xff0000) >> 16),
                         static_cast<uint8_t>((iv & 0xff00) >> 8),
                         static_cast<uint8_t>(iv & 0xff),
                         1
-                    } };
+                    };
                 }
                 break;
 
@@ -238,12 +238,12 @@ optional<Color> parse(const std::string& css_str) {
                     return {};  // Covers NaN.
                 }
                 else {
-                    return { {
+                    return {
                         static_cast<uint8_t>((iv & 0xff000000) >> 24),
                         static_cast<uint8_t>((iv & 0xff0000) >> 16),
                         static_cast<uint8_t>((iv & 0xff00) >> 8), 
                         static_cast<uint8_t>(iv & 0xff)
-                    } };
+                    };
                 }
                 break;
         }
@@ -270,12 +270,12 @@ optional<Color> parse(const std::string& css_str) {
                 }
             }
 
-            return {{
+            return {
                 parse_better(params[0]),
                 parse_better(params[1]),
                 parse_better(params[2]),
                 alpha
-            }};
+            };
 
         } else if (fname == "hsla" || fname == "hsl") {
             if (fname == "hsla") {
@@ -302,12 +302,12 @@ optional<Color> parse(const std::string& css_str) {
             float m2 = l <= 0.5f ? l * (s + 1.0f) : l + s - l * s;
             float m1 = l * 2.0f - m2;
 
-            return {{
+            return {
                 clamp_css_byte(css_hue_to_rgb(m1, m2, h + 1.0f / 3.0f) * 255.0f),
                 clamp_css_byte(css_hue_to_rgb(m1, m2, h) * 255.0f),
                 clamp_css_byte(css_hue_to_rgb(m1, m2, h - 1.0f / 3.0f) * 255.0f),
                 alpha
-            }};
+            };
         }
     }
 

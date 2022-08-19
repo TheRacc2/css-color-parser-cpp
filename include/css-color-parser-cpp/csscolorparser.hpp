@@ -35,6 +35,9 @@ template <class T>
 using optional = std::optional<T>;
 
 struct Color {
+    inline Color(std::string val) {
+        *this = parse(val);
+    }
     inline Color() {
     }
     inline Color(unsigned char r_, unsigned char g_, unsigned char b_, unsigned char a_)
@@ -59,7 +62,7 @@ inline bool operator!=(const Color& lhs, const Color& rhs) {
     return !(lhs == rhs);
 }
 
-optional<Color> parse(const std::string& css_str);
+Color parse(const std::string& css_str);
 
 } // namespace CSSColorParser
 
